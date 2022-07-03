@@ -81,7 +81,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="100dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_lock_power_off"
+        android:src="@drawable/file_upload_fill0_wght400_grad0_opsz48"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view2" />
 
@@ -98,7 +98,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newEmailFieldText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:hint="Email">
@@ -112,7 +112,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newPassFieldText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:hint="Pass">
@@ -126,7 +126,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newBirthDayFieldText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:hint="Birthday">
@@ -140,7 +140,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newPhoneFieldText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:hint="Phone">

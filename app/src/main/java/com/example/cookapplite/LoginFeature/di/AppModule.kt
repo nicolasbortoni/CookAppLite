@@ -5,6 +5,8 @@ import com.example.cookapplite.LoginFeature.framework.UserAuthenticationImpl
 import com.example.cookapplite.LoginFeature.framework.UserDataSourceImpl
 import com.example.cookapplite.LoginFeature.data.UserAuthentication
 import com.example.cookapplite.LoginFeature.data.UserDataSource
+import com.example.cookapplite.LoginFeature.data.UserStorage
+import com.example.cookapplite.LoginFeature.framework.UserStorageImpl
 import com.example.cookapplite.LoginFeature.ui.viewmodel.AddUserViewModel
 import com.example.cookapplite.LoginFeature.ui.viewmodel.LoginViewModel
 import com.example.cookapplite.LoginFeature.usecases.CreateUser
@@ -25,7 +27,10 @@ object AppModule {
     fun provideUserDataSource() : UserDataSource = UserDataSourceImpl()
 
     @Provides
-    fun provideUsersRepository(userAuthentication: UserAuthentication, userDataSource: UserDataSource) : UsersRepository = UsersRepository(userAuthentication, userDataSource)
+    fun provideUserStorage() : UserStorage = UserStorageImpl()
+
+    @Provides
+    fun provideUsersRepository(userAuthentication: UserAuthentication, userDataSource: UserDataSource, userStorage: UserStorage) : UsersRepository = UsersRepository(userAuthentication, userDataSource, userStorage)
 
     @Provides
     fun provideCreateUser(usersRepository: UsersRepository) : CreateUser = CreateUser(usersRepository)

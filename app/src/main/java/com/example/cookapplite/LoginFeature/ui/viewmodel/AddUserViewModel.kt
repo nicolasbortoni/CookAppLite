@@ -1,5 +1,6 @@
 package com.example.cookapplite.LoginFeature.ui.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,10 +20,10 @@ class AddUserViewModel @Inject constructor(
     val create : LiveData<Boolean?> get() = _create
 
 
-    fun createNewUser(newUser: User, newPass : String){
+    fun createNewUser(newUser: User, newPass : String, imageUri : Uri?){
 
         viewModelScope.launch {
-            _create.value = createUser(newUser, newPass)
+            _create.value = createUser(newUser, newPass, imageUri)
         }
     }
 
