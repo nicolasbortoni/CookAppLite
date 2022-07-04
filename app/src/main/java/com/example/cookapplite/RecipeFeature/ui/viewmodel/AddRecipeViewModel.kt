@@ -9,8 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AddRecipeViewModel @Inject constructor(
-) : ViewModel() {
-
+class AddRecipeViewModel @Inject constructor() : ViewModel() {
 }
 

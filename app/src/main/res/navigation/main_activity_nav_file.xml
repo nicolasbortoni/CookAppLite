@@ -3,7 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav_file"
-    app:startDestination="@id/addRecipeFragment">
+    app:startDestination="@id/recipeListFragment">
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cookapplite.RecipeFeature.ui.fragments.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="com.example.cookapplite.RecipeFeature.ui.fragments.RecipeListFragment"
+        android:label="recipe_list_fragment"
+        tools:layout="@layout/recipe_list_fragment" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
         android:name="com.example.cookapplite.RecipeFeature.ui.fragments.AddRecipeFragment"
