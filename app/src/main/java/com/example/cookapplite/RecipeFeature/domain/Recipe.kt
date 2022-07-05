@@ -8,6 +8,6 @@ data class Recipe (
     var author : String?,
     var recipe : String?,
     var image : String?,
-    var security : Boolean
+    var description : String?
 )
 {}
