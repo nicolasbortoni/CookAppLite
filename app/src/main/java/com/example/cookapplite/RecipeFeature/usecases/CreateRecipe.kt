@@ -8,4 +8,3 @@ import com.example.cookapplite.RecipeFeature.domain.Recipe
 
 class CreateRecipe(private val recipesRepository : RecipesRepository) {
     suspend operator fun invoke(newRecipe: Recipe, recipeImage : Uri?) = recipesRepository.createRecipe(newRecipe,recipeImage)
-}
