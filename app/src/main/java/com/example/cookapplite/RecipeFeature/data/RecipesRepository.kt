@@ -14,7 +14,11 @@ class RecipesRepository constructor(
     suspend fun createRecipe(newRecipe : Recipe, recipeImage : Uri?) : Boolean{
         val imagePath = recipeStorage.saveRecipeImage(recipeImage)
         newRecipe.image = imagePath
-
         return recipeDataSource.addRecipe(newRecipe)
     }
+
+    suspend fun getRecipes() : List<Recipe>{
+        return recipeDataSource.getRecipes()
+    }
+
 }

@@ -3,7 +3,6 @@ package com.example.cookapplite.RecipeFeature.ui.fragments
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -12,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.databinding.AddRecipeFragmentBinding
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
@@ -25,7 +26,7 @@ class AddRecipeFragment : Fragment() {
         fun newInstance() = AddRecipeFragment()
     }
 
-    private lateinit var viewModel: AddRecipeViewModel
+    private val viewModel : AddRecipeViewModel by viewModels()
     private lateinit var binding : AddRecipeFragmentBinding
 
     private var recipeImage : Uri? = null
@@ -48,6 +49,8 @@ class AddRecipeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        setObservers()
+
         binding.recipeImageView.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             resultLauncher.launch(gallery)
@@ -62,12 +65,18 @@ class AddRecipeFragment : Fragment() {
                 null,
                 null
             )
-            val private = binding.privateCheckBox.isChecked
-
             viewModel.createNewRecipe(newRecipe, recipeImage)
-
         }
 
+    }
+
+    private fun setObservers(){
+        viewModel.create.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                true -> findNavController().popBackStack()
+                false -> Toast.makeText(requireContext(),"Error al subir la receta", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 }

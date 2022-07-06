@@ -9,21 +9,24 @@ import com.example.cookapplite.RecipeFeature.domain.Recipe
 import android.view.View
 import android.widget.TextView
 
+
 class RecipeAdapter (
-    var recipeList : List<Recipe>
-) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder> (){
+    var recipeList : MutableList <Recipe>
+) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
-    class RecipeHolder(v : View) :RecyclerView.ViewHolder(v){
-        private var view : View = v
-
-        fun setTitle (title : String?){
-            var titleEditText : TextView = view.findViewById(R.id.cardTitle)
+    class RecipeHolder (v: View) : RecyclerView.ViewHolder(v) {
+        private var view: View
+        init {
+            this.view = v
+        }
+        fun setTitle (title : String){
+            var txtTitle : TextView = view.findViewById(R.id.cardTitle)
+            txtTitle.text = title
         }
 
         fun getCardView () : CardView {
             return view.findViewById(R.id.cardRecipe)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
@@ -32,7 +35,7 @@ class RecipeAdapter (
     }
 
     override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
-        holder.setTitle(recipeList[position].title)
+        holder.setTitle(recipeList[position].title!!)
     }
 
     override fun getItemCount(): Int {

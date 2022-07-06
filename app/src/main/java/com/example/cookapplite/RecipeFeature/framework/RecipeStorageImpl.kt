@@ -6,22 +6,22 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import java.util.*
 import javax.inject.Inject
 
 class RecipeStorageImpl @Inject constructor() : RecipeStorage {
 
     private val storage = Firebase.storage
-    private val auth = Firebase.auth
     var storageRef = storage.reference
 
     override suspend fun saveRecipeImage(recipeImage : Uri?) : String?{
-        val profileImageRef = storageRef.child("recipesImages").child(auth.currentUser?.uid!!)
+        val recipesImageRef = storageRef.child("recipesImages").child(UUID.randomUUID().toString())
 
         return try {
-            profileImageRef
+            recipesImageRef
                 .putFile(recipeImage as Uri)
                 .await()
-            profileImageRef.downloadUrl.toString()
+            recipesImageRef.downloadUrl.toString()
         }catch (e : Exception) {
             null
         }
