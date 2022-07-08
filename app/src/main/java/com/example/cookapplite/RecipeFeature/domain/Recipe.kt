@@ -10,4 +10,8 @@ data class Recipe (
     var image : String?,
     var description : String?
 )
-{}
+
+{
+    constructor():this ("","","","","","")
+
+}

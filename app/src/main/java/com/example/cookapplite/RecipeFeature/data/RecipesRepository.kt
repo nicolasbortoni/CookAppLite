@@ -18,7 +18,7 @@ class RecipesRepository constructor(
     }
 
     suspend fun getRecipes() : List<Recipe>{
-        return recipeDataSource.getRecipes()
+        return recipeDataSource.getAll()
     }
 
 }

@@ -21,7 +21,7 @@ class RecipeStorageImpl @Inject constructor() : RecipeStorage {
             recipesImageRef
                 .putFile(recipeImage as Uri)
                 .await()
-            recipesImageRef.downloadUrl.toString()
+                recipesImageRef.downloadUrl.await().toString()
         }catch (e : Exception) {
             null
         }

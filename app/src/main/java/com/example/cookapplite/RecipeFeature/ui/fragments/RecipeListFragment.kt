@@ -26,6 +26,7 @@ class RecipeListFragment : Fragment() {
 
     private val viewModel : RecipeListViewModel by viewModels()
     private lateinit var binding : RecipeListFragmentBinding
+    private var recipeAdapter = RecipeAdapter()
 
     companion object {
         fun newInstance() = RecipeListFragment()
@@ -44,6 +45,7 @@ class RecipeListFragment : Fragment() {
 
         setObservers()
         setupRecyclerView()
+        viewModel.getRecipes()
 
         binding.addRecipeBtn.setOnClickListener {
             viewModel.goToAddRecipe()
@@ -51,18 +53,17 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun setupRecyclerView(){
-        binding.recipesRecycler.setHasFixedSize(true)
-        binding.recipesRecycler.layoutManager  = LinearLayoutManager(context)
-    }
-
-    private fun onItemClick(pos : Int){
-
+        with(binding){
+            recipesRecycler.setHasFixedSize(true)
+            recipesRecycler.layoutManager  = LinearLayoutManager(context)
+            recipesRecycler.adapter = recipeAdapter
+        }
     }
 
     private fun setObservers(){
         viewModel.navigation.observe(this) { handleNavigation(it) }
         viewModel.recipeList.observe(viewLifecycleOwner, Observer{ list ->
-            binding.recipesRecycler.adapter = RecipeAdapter(viewModel.recipeList.value!!)
+            recipeAdapter.setData(list)
         })
     }
 

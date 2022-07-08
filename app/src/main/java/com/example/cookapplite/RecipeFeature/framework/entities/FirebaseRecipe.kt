@@ -7,11 +7,11 @@ class FirebaseRecipe (
     val author : String,
     val description : String,
     val title : String,
-    val image : String,
+    val imagePath : String,
     val recipe :String
     ){
     constructor():this ("","","","","","")
 }
 
 //fun Recipe.toFirebaseRecipe() : FirebaseRecipe = FirebaseRecipe(title!!,description!!)
-fun FirebaseRecipe.toRecipe() : Recipe = Recipe(uid, title, author, recipe, image, description)
+fun FirebaseRecipe.toRecipe() : Recipe = Recipe(uid, title, author, recipe, imagePath, description)

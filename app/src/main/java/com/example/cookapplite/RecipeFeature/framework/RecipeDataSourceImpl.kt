@@ -1,5 +1,7 @@
 package com.example.cookapplite.RecipeFeature.framework
 
+import android.content.ContentValues
+import android.util.Log
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.framework.entities.FirebaseRecipe
 import com.example.cookapplite.RecipeFeature.framework.entities.toRecipe
@@ -33,20 +35,22 @@ class RecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
         return result
     }
 
-    override suspend fun getRecipes(): List<Recipe> {
-        var list : MutableList<Recipe> = mutableListOf()
-        return try {
-            val data = db
-                .collection("Recipes")
-                .get()
-                .await()
-            for (document in data){
-                list.add(document.toObject<FirebaseRecipe>().toRecipe())
+    override suspend fun getAll(): MutableList<Recipe> {
+
+        val instrumentList = mutableListOf<Recipe>()
+
+        val query = db.collection("Recipes")
+
+        try {
+            val data = query.get().await()
+            for (document in data) {
+                instrumentList.add(document.toObject())
             }
-            list
-        } catch (e : Exception){
-            emptyList()
+        } catch (e: Exception) {
+            Log.d("TEST",e.toString())
         }
+        return instrumentList
+
     }
 
 }

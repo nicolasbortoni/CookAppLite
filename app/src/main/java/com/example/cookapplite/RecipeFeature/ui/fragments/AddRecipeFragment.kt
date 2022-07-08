@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.databinding.AddRecipeFragmentBinding
@@ -63,7 +64,7 @@ class AddRecipeFragment : Fragment() {
                 binding.recipeAuthorEditText.text.toString(),
                 binding.recipeEditText.text.toString(),
                 null,
-                null
+                binding.recipeDescriptionEditText.text.toString()
             )
             viewModel.createNewRecipe(newRecipe, recipeImage)
         }
@@ -73,7 +74,7 @@ class AddRecipeFragment : Fragment() {
     private fun setObservers(){
         viewModel.create.observe(viewLifecycleOwner, Observer { result ->
             when(result){
-                true -> findNavController().popBackStack()
+                true -> binding.root.findNavController().navigateUp()
                 false -> Toast.makeText(requireContext(),"Error al subir la receta", Toast.LENGTH_SHORT).show()
             }
         })

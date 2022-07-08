@@ -8,38 +8,70 @@ import com.example.cookapplite.R
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import android.view.View
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.cookapplite.databinding.ItemRecipeBinding
+import kotlin.properties.Delegates
 
 
-class RecipeAdapter (
-    var recipeList : MutableList <Recipe>
-) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
+class RecipeAdapter (): RecyclerView.Adapter<RecipeAdapter.RecipeHolder>(){
 
-    class RecipeHolder (v: View) : RecyclerView.ViewHolder(v) {
-        private var view: View
-        init {
-            this.view = v
-        }
-        fun setTitle (title : String){
-            var txtTitle : TextView = view.findViewById(R.id.cardTitle)
-            txtTitle.text = title
-        }
+    var items: List<Recipe> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
+    lateinit var clickLister : ()-> Unit
 
-        fun getCardView () : CardView {
-            return view.findViewById(R.id.cardRecipe)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeAdapter.RecipeHolder {
+        val binding = ItemRecipeBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false)
+        return RecipeHolder(binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
-        val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_recipe,parent,false)
-        return (RecipeHolder(view))
+    fun setData (data:MutableList<Recipe>){
+        this.items = data
     }
 
-    override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
-        holder.setTitle(recipeList[position].title!!)
+    fun setItemClickListener (f : ()-> Unit){
+        clickLister = f
     }
 
     override fun getItemCount(): Int {
-        return recipeList.size
+        return items.size
     }
+
+    override fun onBindViewHolder(holder: RecipeAdapter.RecipeHolder, position: Int) {
+
+        with(holder){
+            setTitle(items[position].title!!)
+            setDescription(items[position].description!!)
+            setAuthor(items[position].author!!)
+//            getCardLayout().setOnClickListener {
+//                clickLister()
+//            }
+        }
+
+    }
+
+    class RecipeHolder (binding: ItemRecipeBinding ) : RecyclerView.ViewHolder(binding.cardRecipe) {
+
+        val binding : ItemRecipeBinding = binding
+
+        fun setTitle(name : String) {
+            binding.cardTitle.text = name
+        }
+
+        fun setDescription (text : String){
+            binding.cardDescription.text = text
+        }
+
+        fun setAuthor (text : String){
+            binding.cardAuthor.text = text
+        }
+
+        fun getCardLayout () : CardView {
+            return binding.cardRecipe
+        }
+
+    }
+
 
 }

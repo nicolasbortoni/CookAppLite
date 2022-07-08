@@ -4,5 +4,5 @@ import com.example.cookapplite.RecipeFeature.domain.Recipe
 
 interface RecipeDataSource {
     suspend fun addRecipe(newRecipe : Recipe) : Boolean
-    suspend fun getRecipes() : List<Recipe>
+    suspend fun getAll() : List<Recipe>
 }

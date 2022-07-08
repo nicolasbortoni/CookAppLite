@@ -1,5 +1,6 @@
 package com.example.cookapplite.RecipeFeature.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,9 +29,9 @@ class RecipeListViewModel @Inject constructor(
     }
 
     fun getRecipes(){
-        var list : MutableList<Recipe> = mutableListOf()
         viewModelScope.launch {
-              _recipeList.value = getRecipesFromRepository() as MutableList<Recipe>
+              _recipeList.value = getRecipesFromRepository().toMutableList()
+            Log.d("TEST",_recipeList.value.toString())
         }
     }
 
