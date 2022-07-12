@@ -17,10 +17,29 @@
         <action
             android:id="@+id/action_recipeListFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_detailRecipeFragment"
+            app:destination="@id/detailRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
         android:name="com.example.cookapplite.RecipeFeature.ui.fragments.AddRecipeFragment"
         android:label="add_recipe_fragment"
-        tools:layout="@layout/add_recipe_fragment" />
+        tools:layout="@layout/add_recipe_fragment" >
+        <argument
+            android:name="recipeToEdit"
+            app:argType="com.example.cookapplite.RecipeFeature.domain.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailRecipeFragment"
+        android:name="com.example.cookapplite.RecipeFeature.ui.fragments.DetailRecipeFragment"
+        android:label="fragment_detail_recipe"
+        tools:layout="@layout/fragment_detail_recipe" >
+        <argument
+            android:name="recipeToDetail"
+            app:argType="com.example.cookapplite.RecipeFeature.domain.Recipe" />
+        <action
+            android:id="@+id/action_detailRecipeFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
 </navigation>

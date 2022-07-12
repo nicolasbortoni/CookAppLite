@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.databinding.AddRecipeFragmentBinding
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel

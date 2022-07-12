@@ -21,7 +21,7 @@ class UserStorageImpl @Inject constructor() : UserStorage {
             profileImageRef
                 .putFile(image as Uri)
                 .await()
-            profileImageRef.downloadUrl.toString()
+            profileImageRef.downloadUrl.await().toString()
         }catch (e : Exception){
             null
         }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookapplite.R
+import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
 import com.example.cookapplite.RecipeFeature.ui.adapters.RecipeAdapter
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
@@ -53,6 +54,8 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun setupRecyclerView(){
+        recipeAdapter.clickLister = {recipe -> itemClickListener(recipe)}
+        recipeAdapter.context = requireContext()
         with(binding){
             recipesRecycler.setHasFixedSize(true)
             recipesRecycler.layoutManager  = LinearLayoutManager(context)
@@ -70,10 +73,17 @@ class RecipeListFragment : Fragment() {
     private fun handleNavigation(navigation: RecipeListNavigatorStates) {
         when (navigation) {
             is RecipeListNavigatorStates.toAddRecipeFragment -> {
-                val action = RecipeListFragmentDirections.actionRecipeListFragmentToAddRecipeFragment()
+                val action = RecipeListFragmentDirections.actionRecipeListFragmentToAddRecipeFragment(
+                    Recipe()
+                )
                 findNavController().navigate(action)
             }
         }
+    }
+
+    private fun itemClickListener(recipe : Recipe){
+        val action = RecipeListFragmentDirections.actionRecipeListFragmentToDetailRecipeFragment(recipe)
+        findNavController().navigate(action)
     }
 
 }
