@@ -8,8 +8,8 @@ import javax.inject.Inject
 class SessionManagerImpl @Inject constructor(
     private val sessionData: SessionData
 ) : SessionManager {
-    override fun getSessionData(): SessionData {
-        return sessionData
+    override fun getSessionData(): User {
+        return sessionData.userLoged
     }
 
     override fun setSessionData(user: User): Boolean {

@@ -11,4 +11,6 @@ data class User (
     var birthday : String?,
     var profileImage : String?
 )
-{}
+{
+    constructor():this ("","","","","","")
+}

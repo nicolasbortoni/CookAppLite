@@ -6,9 +6,11 @@ import com.example.cookapplite.RecipeFeature.framework.RecipeDataSourceImpl
 import com.example.cookapplite.RecipeFeature.data.RecipeStorage
 import com.example.cookapplite.RecipeFeature.framework.RecipeStorageImpl
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
+import com.example.cookapplite.RecipeFeature.ui.viewmodel.ProfileViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
 import com.example.cookapplite.RecipeFeature.usecases.CreateRecipe
 import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
+import com.example.cookapplite.core.usecases.GetSessionData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +40,8 @@ object RecipeDi {
 
     @Provides
     fun provideRecipeListViewModel(getRecipes: GetRecipesFromRepository) : RecipeListViewModel = RecipeListViewModel(getRecipes)
+
+    @Provides
+    fun provideProfileViewModel(getSessionData: GetSessionData) : ProfileViewModel = ProfileViewModel(getSessionData)
 
 }

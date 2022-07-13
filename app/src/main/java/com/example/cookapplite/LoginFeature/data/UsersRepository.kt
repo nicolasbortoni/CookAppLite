@@ -27,6 +27,7 @@ class UsersRepository  constructor(
 
     suspend fun getUserLoged(): User {
         val currentUid = userAuthentication.getCurrentUid()
+        val lala = currentUid
         return userDataSource.getUser(currentUid!!)
     }
 
