@@ -5,4 +5,5 @@ interface UserAuthentication {
     suspend fun createUser(email: String, pass: String) : String?
     suspend fun sendRecoveryEmail(email : String)
     suspend fun checkEmail(email : String)
+    suspend fun getCurrentUid() : String?
 }

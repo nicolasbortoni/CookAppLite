@@ -25,7 +25,6 @@ class UserAuthenticationImpl @Inject constructor() : UserAuthentication {
             Log.e("LoginUserViewModel", "Exception caught: ${e.message}")
             return false
         }
-      //  return result?.user != null
     }
 
     override suspend fun createUser(email: String, pass: String) : String? {
@@ -59,6 +58,15 @@ class UserAuthenticationImpl @Inject constructor() : UserAuthentication {
         }
         catch (e :Exception){
             Log.e("LoginUserViewModel", "Exception caught: ${e.message}")
+        }
+    }
+
+    override suspend fun getCurrentUid(): String? {
+        return try {
+            auth.currentUser?.uid.toString()
+
+        }catch (e : Exception){
+            null
         }
     }
 

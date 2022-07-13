@@ -1,9 +1,9 @@
 package com.example.cookapplite.RecipeFeature.di
 
 import com.example.cookapplite.RecipeFeature.data.RecipesRepository
-import com.example.cookapplite.RecipeFeature.framework.RecipeDataSource
+import com.example.cookapplite.RecipeFeature.data.RecipeDataSource
 import com.example.cookapplite.RecipeFeature.framework.RecipeDataSourceImpl
-import com.example.cookapplite.RecipeFeature.framework.RecipeStorage
+import com.example.cookapplite.RecipeFeature.data.RecipeStorage
 import com.example.cookapplite.RecipeFeature.framework.RecipeStorageImpl
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel

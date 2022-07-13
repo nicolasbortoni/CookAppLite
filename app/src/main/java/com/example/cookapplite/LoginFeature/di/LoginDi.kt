@@ -10,16 +10,9 @@ import com.example.cookapplite.LoginFeature.framework.UserStorageImpl
 import com.example.cookapplite.LoginFeature.ui.viewmodel.AddUserViewModel
 import com.example.cookapplite.LoginFeature.ui.viewmodel.LoginViewModel
 import com.example.cookapplite.LoginFeature.usecases.CreateUser
+import com.example.cookapplite.LoginFeature.usecases.GetUserLoged
 import com.example.cookapplite.LoginFeature.usecases.LoginUser
-import com.example.cookapplite.RecipeFeature.data.RecipesRepository
-import com.example.cookapplite.RecipeFeature.framework.RecipeDataSource
-import com.example.cookapplite.RecipeFeature.framework.RecipeDataSourceImpl
-import com.example.cookapplite.RecipeFeature.framework.RecipeStorage
-import com.example.cookapplite.RecipeFeature.framework.RecipeStorageImpl
-import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
-import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
-import com.example.cookapplite.RecipeFeature.usecases.CreateRecipe
-import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
+import com.example.cookapplite.core.usecases.SetSessionData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,7 +41,10 @@ object LoginDi {
     fun provideLoginUser(usersRepository: UsersRepository) : LoginUser = LoginUser(usersRepository)
 
     @Provides
-    fun provideLoginViewModel(loginUser: LoginUser) : LoginViewModel = LoginViewModel(loginUser)
+    fun provideGetUserLoged(usersRepository: UsersRepository) : GetUserLoged = GetUserLoged(usersRepository)
+
+    @Provides
+    fun provideLoginViewModel(loginUser: LoginUser, setSessionData: SetSessionData ,getUserLoged: GetUserLoged) : LoginViewModel = LoginViewModel(loginUser,setSessionData,getUserLoged)
 
     @Provides
     fun provideAddUserViewModel(createUser: CreateUser) : AddUserViewModel = AddUserViewModel(createUser)

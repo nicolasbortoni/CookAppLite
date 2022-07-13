@@ -1,10 +1,8 @@
 package com.example.cookapplite.RecipeFeature.framework
 
-import android.content.ContentValues
 import android.util.Log
+import com.example.cookapplite.RecipeFeature.data.RecipeDataSource
 import com.example.cookapplite.RecipeFeature.domain.Recipe
-import com.example.cookapplite.RecipeFeature.framework.entities.FirebaseRecipe
-import com.example.cookapplite.RecipeFeature.framework.entities.toRecipe
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject

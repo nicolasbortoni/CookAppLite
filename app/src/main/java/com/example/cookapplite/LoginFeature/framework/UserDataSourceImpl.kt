@@ -3,7 +3,9 @@ package com.example.cookapplite.LoginFeature.framework
 import com.example.cookapplite.LoginFeature.domain.User
 import com.example.cookapplite.LoginFeature.data.UserDataSource
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -26,6 +28,16 @@ class UserDataSourceImpl @Inject constructor() : UserDataSource {
 
     override suspend fun getUsers(): List<User> {
         return emptyList()
+    }
+
+    override suspend fun getUser(uid: String): User {
+        val docRef = db.collection("Users").document(uid)
+        return try {
+            val data = docRef.get().await()
+            data.toObject()!!
+        }catch (e :Exception){
+            User("","","","","","")
+        }
     }
 
 }

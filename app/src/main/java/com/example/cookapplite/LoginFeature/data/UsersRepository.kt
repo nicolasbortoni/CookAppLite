@@ -25,4 +25,9 @@ class UsersRepository  constructor(
         return userAuthentication.login(email, pass)
     }
 
+    suspend fun getUserLoged(): User {
+        val currentUid = userAuthentication.getCurrentUid()
+        return userDataSource.getUser(currentUid!!)
+    }
+
 }

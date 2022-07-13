@@ -1,4 +1,4 @@
-package com.example.cookapplite.RecipeFeature.framework
+package com.example.cookapplite.RecipeFeature.data
 
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 

@@ -1,7 +1,7 @@
 package com.example.cookapplite.RecipeFeature.framework
 
 import android.net.Uri
-import com.google.firebase.auth.ktx.auth
+import com.example.cookapplite.RecipeFeature.data.RecipeStorage
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
