@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookapplite.LoginFeature.domain.User
+import com.example.cookapplite.LoginFeature.ui.navigatorStates.AddUserNavigatorStates
+import com.example.cookapplite.LoginFeature.ui.navigatorStates.LoginNavigatorStates
 import com.example.cookapplite.LoginFeature.usecases.CreateUser
+import com.mbsoft.givemobile.core.ui.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,14 +19,15 @@ class AddUserViewModel @Inject constructor(
     val createUser : CreateUser
 ) : ViewModel() {
 
-    private val _create = MutableLiveData<Boolean?>()
-    val create : LiveData<Boolean?> get() = _create
-
+    private val _navigation = SingleLiveEvent<AddUserNavigatorStates>()
+    val navigation: LiveData<AddUserNavigatorStates> get() = _navigation
 
     fun createNewUser(newUser: User, newPass : String, imageUri : Uri?){
 
         viewModelScope.launch {
-            _create.value = createUser(newUser, newPass, imageUri)
+            if(createUser(newUser, newPass, imageUri)){
+                _navigation.value = AddUserNavigatorStates.ToMainActivity
+            }
         }
     }
 

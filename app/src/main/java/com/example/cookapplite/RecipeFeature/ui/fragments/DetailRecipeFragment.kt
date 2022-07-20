@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cookapplite.R
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.DetailRecipeNavigatorStates
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.DetailRecipeViewModel
 import com.example.cookapplite.databinding.FragmentDetailRecipeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,8 @@ class DetailRecipeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        setObservers()
+
         val recipe = DetailRecipeFragmentArgs.fromBundle(requireArguments()).recipeToDetail
 
         binding.recipeTitleTextView.text = recipe.title
@@ -46,6 +50,18 @@ class DetailRecipeFragment : Fragment() {
             .centerCrop()
             .into(binding.recipeImage)
 
+    }
+
+    private fun setObservers(){
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+        }
+    }
+
+    private fun handleNavigation(detailRecipeNavigatorStates: DetailRecipeNavigatorStates){
+        when(detailRecipeNavigatorStates){
+
+        }
     }
 
 }

@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.cookapplite.LoginFeature.domain.User
+import com.example.cookapplite.LoginFeature.ui.navigatorStates.AddUserNavigatorStates
+import com.example.cookapplite.LoginFeature.ui.navigatorStates.LoginNavigatorStates
 import com.example.cookapplite.databinding.AddUserFragmentBinding
 import com.example.cookapplite.LoginFeature.ui.viewmodel.AddUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,12 +78,18 @@ class AddUserFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.create.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                true -> goToLogin()
-                false -> Toast.makeText(requireContext(),"Falla al crear usuario", Toast.LENGTH_SHORT).show()
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+        }
+    }
+
+    private fun handleNavigation(addUserNavigatorStates: AddUserNavigatorStates){
+        when(addUserNavigatorStates){
+            is AddUserNavigatorStates.ToMainActivity -> {
+                val action = AddUserFragmentDirections.actionAddUserFragmentToMainActivity()
+                findNavController().navigate(action)
             }
-        })
+        }
     }
 }
 

@@ -6,9 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookapplite.RecipeFeature.domain.Recipe
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.AddRecipeNavigatorStates
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
 import com.example.cookapplite.RecipeFeature.usecases.CreateRecipe
+import com.mana.template.core.ui.viewstates.BaseViewState
+import com.mbsoft.givemobile.core.ui.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.stream.BaseStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,12 +21,24 @@ class AddRecipeViewModel @Inject constructor(
     val createRecipe : CreateRecipe
 ) : ViewModel() {
 
-    private val _create = MutableLiveData<Boolean?>()
-    val create : LiveData<Boolean?> get() = _create
+    private val _navigation = SingleLiveEvent<AddRecipeNavigatorStates>()
+    val navigation: LiveData<AddRecipeNavigatorStates> get() = _navigation
+
+    private val _viewState = SingleLiveEvent<BaseViewState>()
+    val viewState: LiveData<BaseViewState> get() = _viewState
+
+    init {
+        _viewState.value = BaseViewState.Loading
+        _viewState.value = BaseViewState.Idle
+    }
 
     fun createNewRecipe(newRecipe : Recipe, recipeImage : Uri?){
         viewModelScope.launch {
-            _create.value = createRecipe(newRecipe,recipeImage)
+            _viewState.value = BaseViewState.Loading
+            val result = createRecipe(newRecipe,recipeImage)
+            if(result){
+                _navigation.value = AddRecipeNavigatorStates.PopBack
+            }
         }
     }
 

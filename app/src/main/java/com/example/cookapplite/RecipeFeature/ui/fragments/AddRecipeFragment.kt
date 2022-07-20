@@ -14,10 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.cookapplite.RecipeFeature.domain.Recipe
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.AddRecipeNavigatorStates
 import com.example.cookapplite.databinding.AddRecipeFragmentBinding
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
+import com.mana.template.core.ui.viewstates.BaseViewState
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.KeyStore
 
 @AndroidEntryPoint
 class AddRecipeFragment : Fragment() {
@@ -71,12 +75,29 @@ class AddRecipeFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.create.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                true -> binding.root.findNavController().navigateUp()
-                false -> Toast.makeText(requireContext(),"Error al subir la receta", Toast.LENGTH_SHORT).show()
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+            viewState.observe(viewLifecycleOwner, Observer { handleViewState(it) })
+        }
+    }
+
+    private fun handleViewState(viewState : BaseViewState){
+        when(viewState){
+            is BaseViewState.Loading -> {
+                binding.scrollView2.visibility = View.GONE
+                binding.progressBar2.visibility = View.VISIBLE
             }
-        })
+            is BaseViewState.Idle -> {
+                binding.scrollView2.visibility = View.VISIBLE
+                binding.progressBar2.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handleNavigation(addRecipeNavigatorStates: AddRecipeNavigatorStates){
+        when(addRecipeNavigatorStates){
+            is AddRecipeNavigatorStates.PopBack -> findNavController().navigateUp()
+        }
     }
 
 }

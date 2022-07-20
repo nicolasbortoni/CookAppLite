@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cookapplite.LoginFeature.domain.User
 import com.example.cookapplite.R
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.DetailRecipeNavigatorStates
+import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.ProfileNavigatorStates
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.ProfileViewModel
 import com.example.cookapplite.databinding.AddRecipeFragmentBinding
 import com.example.cookapplite.databinding.ProfileFragmentBinding
@@ -35,6 +38,9 @@ class ProfileFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        setObservers()
+
         val user = viewModel.getProfileData()
         setProfileView(user)
     }
@@ -51,6 +57,18 @@ class ProfileFragment : Fragment() {
             .centerCrop()
             .into(binding.profileImage)
 
+    }
+
+    private fun setObservers(){
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+        }
+    }
+
+    private fun handleNavigation(profileNavigatorStates: ProfileNavigatorStates){
+        when(profileNavigatorStates){
+
+        }
     }
 
 }

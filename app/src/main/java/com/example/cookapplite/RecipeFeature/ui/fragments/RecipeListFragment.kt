@@ -1,26 +1,22 @@
 package com.example.cookapplite.RecipeFeature.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.helper.widget.Carousel
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cookapplite.R
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
 import com.example.cookapplite.RecipeFeature.ui.adapters.RecipeAdapter
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
 import com.example.cookapplite.databinding.RecipeListFragmentBinding
+import com.mana.template.core.ui.viewstates.BaseViewState
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
-import kotlin.concurrent.thread
+
 
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
@@ -64,10 +60,13 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun setObservers(){
-        viewModel.navigation.observe(this) { handleNavigation(it) }
-        viewModel.recipeList.observe(viewLifecycleOwner, Observer{ list ->
-            recipeAdapter.setData(list)
-        })
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+            viewState.observe(viewLifecycleOwner, Observer { handleViewState(it) })
+            recipeList.observe(viewLifecycleOwner, Observer{ list ->
+                recipeAdapter.setData(list)
+            })
+        }
     }
 
     private fun handleNavigation(navigation: RecipeListNavigatorStates) {
@@ -77,6 +76,21 @@ class RecipeListFragment : Fragment() {
                     Recipe()
                 )
                 findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun handleViewState(viewState : BaseViewState){
+        when(viewState){
+            is BaseViewState.Loading -> {
+                binding.addRecipeBtn.visibility = View.GONE
+                binding.recipesRecycler.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            is BaseViewState.Idle -> {
+                binding.addRecipeBtn.visibility = View.VISIBLE
+                binding.recipesRecycler.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
             }
         }
     }

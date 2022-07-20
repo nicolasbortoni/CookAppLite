@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.cookapplite.LoginFeature.ui.navigatorStates.LoginNavigatorStates
 import com.example.cookapplite.R
 import com.example.cookapplite.databinding.LoginFragmentBinding
 import com.example.cookapplite.LoginFeature.ui.viewmodel.LoginViewModel
@@ -44,27 +45,29 @@ class LoginFragment : Fragment() {
             viewModel.loginUsers(binding.emailEditText.text.toString(), binding.passEditText.text.toString())
         }
         binding.userMessage.setOnClickListener {
-            goToAddUser()
+            viewModel.goToAddUser()
         }
     }
 
-    private fun goToAddUser(){
-        val action = LoginFragmentDirections.actionLoginFragmentToAddUserFragment()
-        findNavController().navigate(action)
-    }
-    private fun goToMainActivity(){
-        val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
-        findNavController().navigate(action)
+    private fun setObservers(){
+        with(viewModel){
+            navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
+        }
     }
 
-    private fun setObservers(){
-        viewModel.login.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                true -> goToMainActivity()
-                false-> Toast.makeText(requireContext(),"Error al logear", Toast.LENGTH_SHORT).show()
+    private fun handleNavigation(loginNavigatorStates: LoginNavigatorStates){
+        when(loginNavigatorStates){
+            is LoginNavigatorStates.ToMainActivity -> {
+                val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
+                findNavController().navigate(action)
             }
-        })
+            is LoginNavigatorStates.ToAddUserFragment -> {
+                val action = LoginFragmentDirections.actionLoginFragmentToAddUserFragment()
+                findNavController().navigate(action)
+            }
+        }
     }
+
 
     private fun showDialog(){
         val alertDialog : AlertDialog.Builder? = activity?.let {
