@@ -7,6 +7,7 @@ import java.util.*
 @Parcelize
 data class Recipe (
     var uid : String?,
+    var ownerUid : String?,
     var title : String?,
     var author : String?,
     var recipe : String?,
@@ -15,5 +16,5 @@ data class Recipe (
 ) : Parcelable
 
 {
-    constructor():this ("","","","","","")
+    constructor():this ("","","","","","","")
 }

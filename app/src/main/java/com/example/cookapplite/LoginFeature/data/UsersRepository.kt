@@ -2,11 +2,13 @@ package com.example.cookapplite.LoginFeature.data
 
 import android.net.Uri
 import com.example.cookapplite.LoginFeature.domain.User
+import com.example.cookapplite.core.usecases.GetSessionData
 
 class UsersRepository  constructor(
     private val userAuthentication : UserAuthentication,
     private val userDataSource: UserDataSource,
-    private val userStorage: UserStorage
+    private val userStorage: UserStorage,
+    private val getSessionData: GetSessionData
 )
 {
     suspend fun createUser(newUser : User, pass : String, imageUri : Uri?) : Boolean{
@@ -29,6 +31,12 @@ class UsersRepository  constructor(
         val currentUid = userAuthentication.getCurrentUid()
         val lala = currentUid
         return userDataSource.getUser(currentUid!!)
+    }
+
+    suspend fun addToLikedRecipes(uid : String) : Boolean{
+        val user = getSessionData()
+        user.likedRecipes.add(uid)
+        return userDataSource.updateUserData(user)
     }
 
 }

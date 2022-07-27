@@ -1,14 +1,18 @@
 package com.example.cookapplite.RecipeFeature.di
 
+import com.example.cookapplite.LoginFeature.data.UsersRepository
 import com.example.cookapplite.RecipeFeature.data.RecipesRepository
 import com.example.cookapplite.RecipeFeature.data.RecipeDataSource
 import com.example.cookapplite.RecipeFeature.framework.RecipeDataSourceImpl
 import com.example.cookapplite.RecipeFeature.data.RecipeStorage
 import com.example.cookapplite.RecipeFeature.framework.RecipeStorageImpl
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
+import com.example.cookapplite.RecipeFeature.ui.viewmodel.DetailRecipeViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.ProfileViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
+import com.example.cookapplite.RecipeFeature.usecases.AddToLikedRecipes
 import com.example.cookapplite.RecipeFeature.usecases.CreateRecipe
+import com.example.cookapplite.RecipeFeature.usecases.DeleteRecipe
 import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
 import com.example.cookapplite.core.usecases.GetSessionData
 import dagger.Module
@@ -36,12 +40,22 @@ object RecipeDi {
     fun provideGetRecipe(recipesRepository: RecipesRepository) : GetRecipesFromRepository = GetRecipesFromRepository(recipesRepository)
 
     @Provides
-    fun provideAddRecipeViewModel(createRecipe: CreateRecipe) : AddRecipeViewModel = AddRecipeViewModel(createRecipe)
+    fun provideAddToLikedRecipes(usersRepository: UsersRepository) : AddToLikedRecipes = AddToLikedRecipes(usersRepository)
 
     @Provides
-    fun provideRecipeListViewModel(getRecipes: GetRecipesFromRepository) : RecipeListViewModel = RecipeListViewModel(getRecipes)
+    fun provideDeleteRecipe(recipesRepository: RecipesRepository) : DeleteRecipe = DeleteRecipe(recipesRepository)
+
+    @Provides
+    fun provideAddRecipeViewModel(createRecipe: CreateRecipe, getSessionData: GetSessionData) : AddRecipeViewModel = AddRecipeViewModel(createRecipe,getSessionData)
+
+    @Provides
+    fun provideRecipeListViewModel(getRecipes: GetRecipesFromRepository,addToLikedRecipes: AddToLikedRecipes) : RecipeListViewModel = RecipeListViewModel(getRecipes, addToLikedRecipes)
 
     @Provides
     fun provideProfileViewModel(getSessionData: GetSessionData) : ProfileViewModel = ProfileViewModel(getSessionData)
+
+    @Provides
+    fun provideDetailRecipeViewModel(deleteRecipe: DeleteRecipe, getSessionData: GetSessionData) : DetailRecipeViewModel = DetailRecipeViewModel(deleteRecipe,getSessionData)
+
 
 }

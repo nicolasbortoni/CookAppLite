@@ -63,6 +63,7 @@ class AddRecipeFragment : Fragment() {
         binding.createRecipeBtn.setOnClickListener {
             val newRecipe = Recipe(
                 null,
+                null,
                 binding.recipeTitleEditText.text.toString(),
                 binding.recipeAuthorEditText.text.toString(),
                 binding.recipeEditText.text.toString(),

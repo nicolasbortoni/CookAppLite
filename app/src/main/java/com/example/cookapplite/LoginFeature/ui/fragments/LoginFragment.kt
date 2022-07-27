@@ -68,22 +68,4 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-    private fun showDialog(){
-        val alertDialog : AlertDialog.Builder? = activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.apply {
-                setPositiveButton(
-                    R.string.ok,
-                    DialogInterface.OnClickListener { dialog, id ->
-
-                    })
-            }
-        }
-        alertDialog?.setTitle("Recuperar contraseña")
-        alertDialog?.setMessage("Se enviará un mail de recuperación al mail "
-                + binding.emailEditText.text.toString())
-        alertDialog?.create()
-        alertDialog?.show()
-    }
 }

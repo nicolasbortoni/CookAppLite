@@ -6,6 +6,7 @@ import com.example.cookapplite.LoginFeature.data.UserDataSource
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.type.TimeOfDayOrBuilder
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 import javax.inject.Inject
@@ -38,8 +39,17 @@ class UserDataSourceImpl @Inject constructor() : UserDataSource {
             document.toObject()!!
         }catch (e :Exception){
             Log.e("UserDataSourceImpl", "Exception caught: ${e.message}")
-            User("","","","","","")
+            User("","","","","","", mutableListOf(), mutableListOf())
         }
+    }
+
+    override suspend fun updateUserData(user : User) : Boolean{
+        val docRef = db.collection("Users").document(user.uuid!!)
+        try {
+            docRef.set(user).await()
+        }catch(e :Exception){
+        }
+        return true
     }
 
 }

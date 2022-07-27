@@ -18,7 +18,8 @@ object CoreModule {
 
     @Singleton
     @Provides
-    fun provideSessionData() : SessionData = SessionData(User("","","","","",""))
+    fun provideSessionData() : SessionData = SessionData(User("","","","","","", mutableListOf(),
+        mutableListOf()))
 
     @Provides
     fun provideSessionManager(sessionData: SessionData) : SessionManager = SessionManagerImpl(sessionData)

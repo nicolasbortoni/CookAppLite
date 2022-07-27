@@ -65,7 +65,9 @@ class AddUserFragment : Fragment() {
                     binding.newEmailEditText.text.toString(),
                     binding.newPhoneEditText.text.toString(),
                     binding.newBirthDayEditText.text.toString(),
-                    null
+                    null,
+                    mutableListOf(),
+                    mutableListOf()
                 )
             viewModel.createNewUser(newUser, binding.newPassEditText.text.toString(), image)
         }

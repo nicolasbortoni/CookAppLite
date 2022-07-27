@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cookapplite.R
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +23,7 @@ class RecipeAdapter (): RecyclerView.Adapter<RecipeAdapter.RecipeHolder>(){
 
     var items: List<Recipe> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
     lateinit var clickLister : (Recipe) -> Unit
+    lateinit var likeListener : (Recipe) -> Unit
     lateinit var context : Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeAdapter.RecipeHolder {
@@ -47,7 +49,7 @@ class RecipeAdapter (): RecyclerView.Adapter<RecipeAdapter.RecipeHolder>(){
             setDescription(items[position].description!!)
             setAuthor(items[position].author!!)
 
-        Glide
+            Glide
                 .with(context)
                 .load(items[position].image)
                 .centerCrop()
@@ -55,6 +57,9 @@ class RecipeAdapter (): RecyclerView.Adapter<RecipeAdapter.RecipeHolder>(){
 
             getCardLayout().setOnClickListener {
                 clickLister(items[position])
+            }
+            getLikeBtn().setOnClickListener {
+                likeListener(items[position])
             }
         }
 
@@ -82,6 +87,10 @@ class RecipeAdapter (): RecyclerView.Adapter<RecipeAdapter.RecipeHolder>(){
 
         fun getCardLayout () : CardView {
             return binding.cardRecipe
+        }
+
+        fun  getLikeBtn() : ImageView {
+            return binding.likeBtn
         }
 
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
+import com.example.cookapplite.RecipeFeature.usecases.AddToLikedRecipes
 import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
 import com.mana.template.core.ui.viewstates.BaseViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
-    val getRecipesFromRepository: GetRecipesFromRepository
+    val getRecipesFromRepository: GetRecipesFromRepository,
+    val addToLikedRecipes: AddToLikedRecipes
 ) : ViewModel() {
 
     private val _navigation = SingleLiveEvent<RecipeListNavigatorStates>()
@@ -39,6 +41,12 @@ class RecipeListViewModel @Inject constructor(
             if(_recipeList.value != null){
                 _viewState.value = BaseViewState.Idle
             }
+        }
+    }
+
+    fun likeRecipe(recipe : Recipe){
+        viewModelScope.launch {
+            addToLikedRecipes(recipe.uid!!)
         }
     }
 

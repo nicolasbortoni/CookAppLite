@@ -9,21 +9,21 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import java.util.*
 import javax.inject.Inject
 
 class RecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
 
     private val db = Firebase.firestore
-    private val auth = Firebase.auth
 
     override suspend fun addRecipe(newRecipe: Recipe): Boolean {
 
-        newRecipe.uid = auth.currentUser?.uid
+        newRecipe.uid = UUID.randomUUID().toString()
 
         var result = try {
             db
                 .collection("Recipes")
-                .document()
+                .document(newRecipe.uid!!)
                 .set(newRecipe)
                 .await()
             true
@@ -48,6 +48,20 @@ class RecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
             Log.d("TEST",e.toString())
         }
         return instrumentList
+
+    }
+
+    override suspend fun removeRecipe(uid: String): Boolean {
+
+        val query = db.collection("Recipes").document(uid)
+
+        try {
+            query.delete().await()
+        }catch (e : Exception){
+
+        }
+
+        return true
 
     }
 

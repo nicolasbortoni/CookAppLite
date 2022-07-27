@@ -6,4 +6,5 @@ interface UserDataSource {
     suspend fun addUser(newUser : User) : Boolean
     suspend fun getUsers() : List<User>
     suspend fun getUser(uid : String) : User
+    suspend fun updateUserData(user : User) : Boolean
 }

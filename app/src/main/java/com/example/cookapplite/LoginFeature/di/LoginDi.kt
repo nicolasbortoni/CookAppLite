@@ -12,6 +12,7 @@ import com.example.cookapplite.LoginFeature.ui.viewmodel.LoginViewModel
 import com.example.cookapplite.LoginFeature.usecases.CreateUser
 import com.example.cookapplite.LoginFeature.usecases.GetUserLoged
 import com.example.cookapplite.LoginFeature.usecases.LoginUser
+import com.example.cookapplite.core.usecases.GetSessionData
 import com.example.cookapplite.core.usecases.SetSessionData
 import dagger.Module
 import dagger.Provides
@@ -32,7 +33,7 @@ object LoginDi {
     fun provideUserStorage() : UserStorage = UserStorageImpl()
 
     @Provides
-    fun provideUsersRepository(userAuthentication: UserAuthentication, userDataSource: UserDataSource, userStorage: UserStorage) : UsersRepository = UsersRepository(userAuthentication, userDataSource, userStorage)
+    fun provideUsersRepository(userAuthentication: UserAuthentication, userDataSource: UserDataSource, userStorage: UserStorage, getSessionData: GetSessionData) : UsersRepository = UsersRepository(userAuthentication, userDataSource, userStorage,getSessionData)
 
     @Provides
     fun provideCreateUser(usersRepository: UsersRepository) : CreateUser = CreateUser(usersRepository)
@@ -47,6 +48,6 @@ object LoginDi {
     fun provideLoginViewModel(loginUser: LoginUser, setSessionData: SetSessionData ,getUserLoged: GetUserLoged) : LoginViewModel = LoginViewModel(loginUser,setSessionData,getUserLoged)
 
     @Provides
-    fun provideAddUserViewModel(createUser: CreateUser) : AddUserViewModel = AddUserViewModel(createUser)
+    fun provideAddUserViewModel(createUser: CreateUser, setSessionData: SetSessionData, getUserLoged: GetUserLoged) : AddUserViewModel = AddUserViewModel(createUser,setSessionData,getUserLoged)
 
 }

@@ -18,4 +18,8 @@ class RecipesRepository constructor(
         return recipeDataSource.getAll()
     }
 
+    suspend fun deleteRecipe(uid :String) : Boolean {
+        return recipeDataSource.removeRecipe(uid)
+    }
+
 }
