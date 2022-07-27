@@ -60,6 +60,7 @@ class LoginFragment : Fragment() {
             is LoginNavigatorStates.ToMainActivity -> {
                 val action = LoginFragmentDirections.actionLoginFragmentToMainActivity()
                 findNavController().navigate(action)
+                requireActivity().finish()
             }
             is LoginNavigatorStates.ToAddUserFragment -> {
                 val action = LoginFragmentDirections.actionLoginFragmentToAddUserFragment()

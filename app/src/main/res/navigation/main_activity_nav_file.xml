@@ -16,7 +16,8 @@
         tools:layout="@layout/recipe_list_fragment" >
         <action
             android:id="@+id/action_recipeListFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment" />
+            app:destination="@id/addRecipeFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_recipeListFragment_to_detailRecipeFragment"
             app:destination="@id/detailRecipeFragment" />
@@ -42,4 +43,9 @@
             android:id="@+id/action_detailRecipeFragment_to_addRecipeFragment"
             app:destination="@id/addRecipeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myRecipeFeedFragment"
+        android:name="com.example.cookapplite.RecipeFeature.ui.fragments.MyRecipesFeedFragment"
+        android:label="fragment_my_recipes_feed"
+        tools:layout="@layout/fragment_my_recipes_feed" />
 </navigation>

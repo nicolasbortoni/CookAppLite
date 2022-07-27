@@ -16,10 +16,13 @@
         <entry key="app/src/main/res/layout/add_recipe_fragment.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/add_user_fragment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_detail_recipe.xml" value="0.2780517578125" />
+        <entry key="app/src/main/res/layout/fragment_my_recipes_feed.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/item_recipe.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.41450717207314314" />
         <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/recipe_list_fragment.xml" value="0.3890625" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/menu/options_menu.xml" value="0.40260416666666665" />
       </map>
     </option>
   </component>

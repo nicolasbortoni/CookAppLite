@@ -10,10 +10,7 @@ import com.example.cookapplite.RecipeFeature.ui.viewmodel.AddRecipeViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.DetailRecipeViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.ProfileViewModel
 import com.example.cookapplite.RecipeFeature.ui.viewmodel.RecipeListViewModel
-import com.example.cookapplite.RecipeFeature.usecases.AddToLikedRecipes
-import com.example.cookapplite.RecipeFeature.usecases.CreateRecipe
-import com.example.cookapplite.RecipeFeature.usecases.DeleteRecipe
-import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
+import com.example.cookapplite.RecipeFeature.usecases.*
 import com.example.cookapplite.core.usecases.GetSessionData
 import dagger.Module
 import dagger.Provides
@@ -46,10 +43,13 @@ object RecipeDi {
     fun provideDeleteRecipe(recipesRepository: RecipesRepository) : DeleteRecipe = DeleteRecipe(recipesRepository)
 
     @Provides
+    fun provideSearchRecipes() : SearchRecipes = SearchRecipes()
+
+    @Provides
     fun provideAddRecipeViewModel(createRecipe: CreateRecipe, getSessionData: GetSessionData) : AddRecipeViewModel = AddRecipeViewModel(createRecipe,getSessionData)
 
     @Provides
-    fun provideRecipeListViewModel(getRecipes: GetRecipesFromRepository,addToLikedRecipes: AddToLikedRecipes) : RecipeListViewModel = RecipeListViewModel(getRecipes, addToLikedRecipes)
+    fun provideRecipeListViewModel(getRecipesFromRepository: GetRecipesFromRepository,searchRecipes: SearchRecipes,addToLikedRecipes: AddToLikedRecipes) : RecipeListViewModel = RecipeListViewModel(getRecipesFromRepository, searchRecipes, addToLikedRecipes)
 
     @Provides
     fun provideProfileViewModel(getSessionData: GetSessionData) : ProfileViewModel = ProfileViewModel(getSessionData)

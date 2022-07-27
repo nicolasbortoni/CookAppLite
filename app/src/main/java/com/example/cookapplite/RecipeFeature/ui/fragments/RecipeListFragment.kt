@@ -1,15 +1,18 @@
 package com.example.cookapplite.RecipeFeature.ui.fragments
 
 import android.os.Bundle
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookapplite.R
 import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
 import com.example.cookapplite.RecipeFeature.ui.adapters.RecipeAdapter
@@ -35,6 +38,7 @@ class RecipeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = RecipeListFragmentBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -43,16 +47,42 @@ class RecipeListFragment : Fragment() {
 
         setObservers()
         setupRecyclerView()
-        viewModel.getRecipes()
+
 
         binding.addRecipeBtn.setOnClickListener {
             viewModel.goToAddRecipe()
         }
+
+        binding.searchEditText.setOnEditorActionListener(TextView.OnEditorActionListener{ _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    viewModel.searchRecipesWithKeyword(binding.searchEditText.text.toString())
+                }
+                return@OnEditorActionListener true
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.columnView -> {
+                binding.recipesRecycler.layoutManager = GridLayoutManager(context,2)
+                true
+            }
+            R.id.listView -> {
+                binding.recipesRecycler.layoutManager = LinearLayoutManager(context)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupRecyclerView(){
-        recipeAdapter.clickLister = {recipe -> itemClickListener(recipe)}
-        recipeAdapter.likeListener = {recipe -> likeClickListener(recipe)}
+        recipeAdapter.clickLister = { itemClickListener(it) }
+        recipeAdapter.likeListener = { likeClickListener(it) }
         recipeAdapter.context = requireContext()
         with(binding){
             recipesRecycler.setHasFixedSize(true)
@@ -65,9 +95,7 @@ class RecipeListFragment : Fragment() {
         with(viewModel){
             navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
             viewState.observe(viewLifecycleOwner, Observer { handleViewState(it) })
-            recipeList.observe(viewLifecycleOwner, Observer{ list ->
-                recipeAdapter.setData(list)
-            })
+            recipeList.observe(viewLifecycleOwner, Observer{  recipeAdapter.setData(it) })
         }
     }
 

@@ -35,19 +35,19 @@ class RecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
 
     override suspend fun getAll(): MutableList<Recipe> {
 
-        val instrumentList = mutableListOf<Recipe>()
+        val recipeList = mutableListOf<Recipe>()
 
         val query = db.collection("Recipes")
 
         try {
             val data = query.get().await()
             for (document in data) {
-                instrumentList.add(document.toObject())
+                recipeList.add(document.toObject())
             }
         } catch (e: Exception) {
             Log.d("TEST",e.toString())
         }
-        return instrumentList
+        return recipeList
 
     }
 
@@ -62,6 +62,26 @@ class RecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
         }
 
         return true
+
+    }
+
+    override suspend fun searchRecipe(keyword: String): List<Recipe> {
+        val recipeList = mutableListOf<Recipe>()
+        val query = db.collection("Recipes")
+
+        return try {
+            val data1 = query.whereEqualTo("title",keyword).get().await()
+            for(document in data1){
+                recipeList.add(document.toObject())
+            }
+            val data2 = query.whereEqualTo("description", keyword).get().await()
+            for(document in data2) {
+                recipeList.add(document.toObject())
+            }
+            recipeList
+        }catch (e : Exception){
+            emptyList()
+        }
 
     }
 

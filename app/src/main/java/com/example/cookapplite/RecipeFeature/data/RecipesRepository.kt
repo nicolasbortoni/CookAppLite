@@ -22,4 +22,8 @@ class RecipesRepository constructor(
         return recipeDataSource.removeRecipe(uid)
     }
 
+    suspend fun searchRecipes(keyword : String) : List<Recipe>{
+        return recipeDataSource.searchRecipe(keyword)
+    }
+
 }

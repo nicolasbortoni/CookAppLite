@@ -5,9 +5,14 @@
     <item
         android:id="@+id/recipeListFragment"
         android:icon="@drawable/search_fill0_wght400_grad0_opsz48"
-        android:title="Recipes" />
+        android:title="Search" />
+    <item
+        android:id="@+id/myRecipeFeedFragment"
+        android:icon="@drawable/list_fill0_wght400_grad0_opsz48"
+        android:title="My Recipes" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/person_fill0_wght400_grad0_opsz48"
         android:title="Profile" />
+
 </menu>

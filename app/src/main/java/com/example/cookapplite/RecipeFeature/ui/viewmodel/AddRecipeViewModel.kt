@@ -27,7 +27,6 @@ class AddRecipeViewModel @Inject constructor(
     val viewState: LiveData<BaseViewState> get() = _viewState
 
     init {
-        _viewState.value = BaseViewState.Loading
         _viewState.value = BaseViewState.Idle
     }
 

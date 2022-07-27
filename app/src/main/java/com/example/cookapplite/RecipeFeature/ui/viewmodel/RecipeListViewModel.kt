@@ -9,6 +9,7 @@ import com.example.cookapplite.RecipeFeature.domain.Recipe
 import com.example.cookapplite.RecipeFeature.ui.NavigatorStates.RecipeListNavigatorStates
 import com.example.cookapplite.RecipeFeature.usecases.AddToLikedRecipes
 import com.example.cookapplite.RecipeFeature.usecases.GetRecipesFromRepository
+import com.example.cookapplite.RecipeFeature.usecases.SearchRecipes
 import com.mana.template.core.ui.viewstates.BaseViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
     val getRecipesFromRepository: GetRecipesFromRepository,
+    val searchRecipes: SearchRecipes,
     val addToLikedRecipes: AddToLikedRecipes
 ) : ViewModel() {
 
@@ -30,17 +32,20 @@ class RecipeListViewModel @Inject constructor(
     private val _viewState: MutableLiveData<BaseViewState> = MutableLiveData()
     val viewState: LiveData<BaseViewState> get() = _viewState
 
+    init {
+        _viewState.value = BaseViewState.Idle
+    }
+
     fun goToAddRecipe(){
         _navigation.value = RecipeListNavigatorStates.toAddRecipeFragment
     }
 
-    fun getRecipes(){
+    fun searchRecipesWithKeyword(keyWord : String){
         viewModelScope.launch {
             _viewState.value = BaseViewState.Loading
-            _recipeList.value = getRecipesFromRepository().toMutableList()
-            if(_recipeList.value != null){
-                _viewState.value = BaseViewState.Idle
-            }
+            val list = getRecipesFromRepository()
+            _recipeList.value = searchRecipes.searchRecipes(keyWord,list).toMutableList()
+            _viewState.value = BaseViewState.Idle
         }
     }
 

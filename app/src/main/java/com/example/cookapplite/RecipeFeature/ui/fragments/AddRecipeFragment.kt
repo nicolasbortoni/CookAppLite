@@ -75,6 +75,11 @@ class AddRecipeFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     private fun setObservers(){
         with(viewModel){
             navigation.observe(viewLifecycleOwner, Observer { handleNavigation(it) })
